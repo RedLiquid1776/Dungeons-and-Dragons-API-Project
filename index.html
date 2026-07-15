@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D 5e Creature Guide (2014)</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/d10d13dc21.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <section id="landing">
+    <nav>
+        <figure>
+            <img id="personal-logo" src="assets/icosahedron-icon-2840746-512.png" alt="D&D Logo">
+        </figure>
+        <ul class="nav__link--list">
+            <li class="nav__link click">
+                <div class="tooltip-container">
+                    <a href="#" class="
+                        nav__link--anchor
+                        link__hover-effect
+                        link__hover-effect--black">
+                    Request</a>
+                    <span class="tooltip">We rolled a 1.<br>This feature isn't available right now.</span>
+                </div>
+            </li>
+            <li class="nav__link click" onclick="toggleContrast()">
+                    <a href="#" class="
+                    nav__link--anchor
+                    link__hover-effect
+                    link__hover-effect--black">
+                <i class="fa-solid fa-circle-half-stroke"></i></a>
+                </li>
+            </li>
+        </ul>
+    </nav>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="header__description">
+                <h1>2014 5e Creature Guide</h1>
+                <hr class="header__title--break">
+                <p class="header__description--para">A full, comprehensive list of Dungeons & Dragons 5th Edition creatures for any of your campaign settings - Or even casual browsing!</p>
+                <p class="header__description--para">This guide is a work in progress, and will be updated as more creatures are added to the 5e system. Have your own you'd like to see added? Hit the reqeust button at the top!</p>
+                <div class="header__search">
+                    <input type="text" class="header__search--input" placeholder="Enter a creature name">
+                    <button class="header__search--btn" onclick="alert('This feature was supposed to bring up a modal window. But that has not been implimented yet. Sorry!')">Search</button>
+                </div>
+            </div>
+        <figure>
+            <img src="./assets/4F7D2918-8CE2-4033-B30A-045249C099F8.jpeg" class="header__img" alt="Header Image">
+        </figure>
+    </div>
+    <p class="scroll__description">Or, scroll down to view the full list!</p>
+</header>
+<a href="#creatures" class="scroll">
+<div class="scroll__icon click"></div>
+</a>
+<hr class="section__divider">
+</section>
+<section id="creatures">
+    <div class="container">
+        <div class="row">
+            <h2 class="section__title">Creatures</h2>
+            <hr class="section__title--break">
+            <p class="section__description">A full list of creatures from the 2014 Dungeons & Dragons 5th Edition system. To find out more on a specific creature, click the button below the overview! Or, scroll down manually; the hard way. Not sure why you would want to do that but, hey, not here to judge.</p>
+        </div>
+        <div class="row">
+            <div class="creature__search">
+                <input type="text" id="creature-search-input" class="creature__search--input" placeholder="Search creatures">
+            </div>
+        </div>
+        <div id="creature-loader" class="creature-loader">Compiling creatures...</div>
+        <div class="creature__list" id="creature-list">
+        </div>
+        <div class="row load-more-row">
+            <button id="load-more-btn" class="header__search--btn load-more-btn">Load More</button>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
