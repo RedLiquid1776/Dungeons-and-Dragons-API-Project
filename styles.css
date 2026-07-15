@@ -337,6 +337,14 @@ DARK THEME
     filter: invert();
 }
 
+body.dark-theme {
+    background-color: #242424;
+}
+
+.dark-theme .section__divider {
+    background-color: white;
+}
+
 .dark-theme .scroll__icon {
     border-color: white;
 }
