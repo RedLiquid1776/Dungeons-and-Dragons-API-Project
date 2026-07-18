@@ -43,7 +43,7 @@
                 <p class="header__description--para">A full, comprehensive list of Dungeons & Dragons 5th Edition creatures for any of your campaign settings - Or even casual browsing!</p>
                 <p class="header__description--para">This guide is a work in progress, and will be updated as more creatures are added to the 5e system. Have your own you'd like to see added? Hit the reqeust button at the top!</p>
                 <div class="header__search">
-                    <input type="text" class="header__search--input" placeholder="Enter a creature name">
+                    <input type="text" class="header__search--input" placeholder="Find Creature">
                     <button class="header__search--btn" onclick="alert('This feature was supposed to bring up a modal window. But that has not been implimented yet. Sorry!')">Search</button>
                 </div>
             </div>
@@ -66,8 +66,23 @@
             <p class="section__description">A full list of creatures from the 2014 Dungeons & Dragons 5th Edition system. To find out more on a specific creature, click the button below the overview! Or, scroll down manually; the hard way. Not sure why you would want to do that but, hey, not here to judge.</p>
         </div>
         <div class="row">
-            <div class="creature__search">
-                <input type="text" id="creature-search-input" class="creature__search--input" placeholder="Search creatures">
+            <div class="creature__controls">
+                <div class="creature__search">
+                    <input type="text" id="creature-search-input" class="creature__search--input" placeholder="Search creatures">
+                </div>
+                <div class="creature__sort">
+                    <select class="creature__sort--select" aria-label="Sort creatures">
+                        <option value="name" selected>Name (A-Z)</option>
+                        <optgroup label="Challenge Rating">
+                            <option value="cr-asc">Low to High</option>
+                            <option value="cr-desc">High to Low</option>
+                        </optgroup>
+                        <optgroup label="Hit Points">
+                            <option value="hp-asc">Low to High</option>
+                            <option value="hp-desc">High to Low</option>
+                        </optgroup>
+                    </select>
+                </div>
             </div>
         </div>
         <div id="creature-loader" class="creature-loader">Compiling creatures...</div>

@@ -7,6 +7,7 @@ let monsterCache = [];
 let monsterDetailCache = {};
 let currentPage = 0;
 const pageSize = 50;
+let currentSortOption = 'name';
 let searchTimeout;
 
 function toggleContrast() {
@@ -111,15 +112,46 @@ async function renderSearchResults(query) {
     }
 }
 
-async function renderLoadedPages() {
+function getCreatureSortComparator(option) {
+    switch (option) {
+        case 'cr-asc':
+            return (a, b) => (a.challenge_rating || 0) - (b.challenge_rating || 0);
+        case 'cr-desc':
+            return (a, b) => (b.challenge_rating || 0) - (a.challenge_rating || 0);
+        case 'hp-asc':
+            return (a, b) => (a.hit_points || 0) - (b.hit_points || 0);
+        case 'hp-desc':
+            return (a, b) => (b.hit_points || 0) - (a.hit_points || 0);
+        case 'name':
+        default:
+            return (a, b) => a.name.localeCompare(b.name);
+    }
+}
+
+function sortCreatureDetails(details, option = currentSortOption) {
+    const sortedDetails = [...details];
+    sortedDetails.sort(getCreatureSortComparator(option));
+    return sortedDetails;
+}
+
+async function renderLoadedPages(sortOption = currentSortOption) {
     const creatureList = document.getElementById('creature-list');
     creatureList.innerHTML = '';
 
-    for (let page = 0; page <= currentPage; page += 1) {
-        const monsters = monsterCache.slice(page * pageSize, page * pageSize + pageSize);
-        const details = await Promise.all(monsters.map(monster => fetchCreatureDetails(monster.index)));
-        creatureList.innerHTML += details.filter(Boolean).map(createCreatureCard).join('');
+    const loadedMonsterCount = (currentPage + 1) * pageSize;
+    const monsters = monsterCache.slice(0, loadedMonsterCount);
+    const details = await Promise.all(monsters.map(monster => fetchCreatureDetails(monster.index)));
+    const sortedDetails = sortCreatureDetails(details.filter(Boolean), sortOption);
+
+    creatureList.innerHTML = sortedDetails.map(createCreatureCard).join('');
+}
+
+async function updateCreatureListDisplay() {
+    const searchInput = document.getElementById('creature-search-input');
+    if (searchInput?.value.trim()) {
+        return;
     }
+    await renderLoadedPages(currentSortOption);
 }
 
 function capitalizeAlignment(alignment) {
@@ -262,6 +294,7 @@ async function loadCreatures() {
     setLoadingState(true, true);
     const result = await loadCreaturePage(currentPage);
     setLoadingState(false, true);
+    await updateCreatureListDisplay();
     if (!result.hasItems || result.isLastPage) {
         hideLoadMoreButton();
     }
@@ -272,8 +305,17 @@ async function loadMoreCreatures() {
     setLoadingState(true, false);
     const result = await loadCreaturePage(currentPage);
     setLoadingState(false, false);
+    await updateCreatureListDisplay();
     if (!result.hasItems || result.isLastPage) {
         hideLoadMoreButton();
+    }
+}
+
+function handleSortChange(event) {
+    currentSortOption = event.target.value || 'name';
+    const searchInput = document.getElementById('creature-search-input');
+    if (!searchInput?.value.trim()) {
+        renderLoadedPages(currentSortOption);
     }
 }
 
@@ -301,5 +343,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderSearchResults(event.target.value);
             }
         });
+    }
+
+    const sortSelect = document.querySelector('.creature__sort--select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', handleSortChange);
     }
 });
